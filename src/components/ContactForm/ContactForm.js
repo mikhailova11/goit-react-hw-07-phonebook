@@ -1,6 +1,6 @@
 import {useState} from "react";
 import s from "./ContactForm.module.css";
-import {addContact} from '../../redux/store'
+import {addContact} from '../../redux/operation'
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ContactForm () {
@@ -11,6 +11,7 @@ export default function ContactForm () {
 
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
+    
 
     const handleChange = (e) => {
         const {value, name} = e.target
@@ -43,7 +44,7 @@ export default function ContactForm () {
         })
 
             if (!sameContact ){
-            dispatch(addContact(name, number));
+            dispatch(addContact({name, number}));
             reset();
             return;
             } 

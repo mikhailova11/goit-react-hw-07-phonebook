@@ -1,35 +1,25 @@
 
 import {  configureStore, combineReducers, createReducer, createAction } from '@reduxjs/toolkit';
-import {   FLUSH,
+import {  
+  FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER } from 'redux-persist';
+
 import logger from 'redux-logger';
-import { nanoid } from 'nanoid';
+import { addContact, deleteContact, fetchContacts } from './operation';
 
 
 export const filterChange = createAction('filterChange');
 
-export const deleteContact = createAction('deleteContact');
 
-export const addContact = createAction('addContact',
-  (name, number) => {
-    return {
-      payload: {
-        id: nanoid(),
-        name,
-        number,
-      },
-    };
-  },
-);
-
-
-const items = createReducer([{name: 'Nata', id:'01',  number: '0999999999' }], {
-  [addContact]: (state, { payload }) => [payload, ...state],
-  [deleteContact]: (state, { payload }) => state.filter(contact => contact.id !== payload),
+const items = createReducer([], {
+  [fetchContacts.fulfilled]: (_, {payload}) => payload,
+  [addContact.fulfilled]: (state, { payload }) => [payload, ...state],
+  [deleteContact.fulfilled]: (state, { payload }) => state.filter(contact => contact.id !== payload),
+  
 });
 
 const filter = createReducer('', {
@@ -42,7 +32,6 @@ const  contactsReducer = combineReducers({
 });
 
 
-
 export const store = configureStore({
   reducer: { contacts:  contactsReducer },
   middleware: getDefaultMiddleware =>
@@ -53,4 +42,5 @@ export const store = configureStore({
     }).concat(logger),
   devTools: process.env.NODE_ENV === 'development',
 });
+
 
