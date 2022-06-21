@@ -3,10 +3,12 @@ import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList";
 import s from "./App.module.css";
+import { useSelector } from "react-redux";
 
 
 
 export default function App() {
+  const contacts = useSelector(state => state.contacts.items)
 
   return (
     <div className={s.container}>
@@ -15,7 +17,7 @@ export default function App() {
 
         <h2 className={s.title}>Contacts</h2>
         <Filter />
-        <ContactList/>
+        {contacts.length  > 0 && <ContactList/> }
 
     </div>
     

@@ -27,6 +27,7 @@ export default function ContactList () {
     },[dispatch])
 
         return ( 
+            
         <form>
         <ul className={s.list}>
             {contacts.map(({name, id, number}) => ( 
