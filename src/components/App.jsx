@@ -20,9 +20,13 @@ export default function App() {
         <h2 className={s.title}>Phonebook</h2>
         <ContactForm />
 
+        
+        {contacts.length  > 0 && 
+        <>
         <h2 className={s.title}>Contacts</h2>
         <Filter />
-        {contacts.length  > 0 && <ContactList/> }
+        <ContactList/>
+        </> }
 
     </div>
     
